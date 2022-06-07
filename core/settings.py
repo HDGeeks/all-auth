@@ -62,18 +62,36 @@ INSTALLED_APPS = [
 ]
 SITE_ID = 1
 
-#ACCOUNT_EMAIL_VERIFICATION = "none"
-#ACCOUNT_EMAIL_REQUIRED = False
-#ACCOUNT_AUTHENTICATION_METHOD = 'username'
+
+
+# for login
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True   
 ACCOUNT_USERNAME_REQUIRED = False
+LOGIN_REDIRECT_URL = "/"
 
+# for resetting password
 OLD_PASSWORD_FIELD_ENABLED=True
-#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-#LOGIN_REDIRECT_URL = "/"
-ACCOUNT_LOGOUT_ON_GET = True
+
+
+# use jwt instead of session
 REST_USE_JWT = True
+
+
+# to keep the user logged in after password change
+LOGOUT_ON_PASSWORD_CHANGE = False
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+
+# UNSURE
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400 # 1 day in seconds
+ACCOUNT_LOGOUT_REDIRECT_URL ='/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
+#SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
 
 """
 SMTP SETTINGS ,
@@ -81,6 +99,8 @@ SMTP SETTINGS ,
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
+DEFAULT_TO_EMAIL = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_USER =os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD =os.environ.get('EMAIL_HOST_PASSWORD')
 
@@ -128,7 +148,10 @@ SWAGGER_SETTINGS = {
 SWAGGER_SETTINGS = {
    'USE_SESSION_AUTH': False
 }
-
+AUTHENTICATION_BACKENDS = (
+   "django.contrib.auth.backends.ModelBackend",
+   "allauth.account.auth_backends.AuthenticationBackend"
+)
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases

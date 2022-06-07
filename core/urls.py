@@ -7,6 +7,7 @@ from django.contrib import admin
 from django.urls import path,include,re_path
 from django.contrib import admin
 from rest_auth.views import PasswordResetConfirmView
+from rest_auth.registration.views import VerifyEmailView, RegisterView
 
 
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
@@ -44,15 +45,26 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
+
+    path('api-auth/', include('rest_framework.urls',namespace='rest_framework')),
+    
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
+
+    # email confirmation sent
+    re_path(r'^account-confirm-email/', VerifyEmailView.as_view(),
+     name='account_email_verification_sent'),
+    # confirmed
+    re_path(r'^account-confirm-email/(?P<key>[-:\w]+)/$', VerifyEmailView.as_view(),
+     name='account_confirm_email'),
+
+     # reset password
+    re_path(r'^rest-auth/password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', PasswordResetConfirmView.as_view(),
+     name='password_reset_confirm'),
+
+    # Social auth
     path('rest-auth/facebook/', FacebookLogin.as_view(), name='fb_login'),
     path('rest-auth/google/', GoogleLogin.as_view(), name='google_login'),
-    re_path(r'^rest-auth/password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', PasswordResetConfirmView.as_view(),
-        name='password_reset_confirm'),
-
-    # password reset
 
     
 
