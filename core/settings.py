@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
      #drf_yasg
     'drf_yasg',
-    # app
+    # simple jwt token
+    'rest_framework_simplejwt',
   
     #rest_framework
     'rest_framework',
@@ -64,33 +65,54 @@ SITE_ID = 1
 
 
 
-# for login
+# for account
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_REQUIRED = True   
-ACCOUNT_USERNAME_REQUIRED = False
-LOGIN_REDIRECT_URL = "/"
-
-# for resetting password
-OLD_PASSWORD_FIELD_ENABLED=True
-
-
-# use jwt instead of session
-REST_USE_JWT = True
-
-
-# to keep the user logged in after password change
-LOGOUT_ON_PASSWORD_CHANGE = False
+ACCOUNT_USER_EMAIL_FIELD = 'email'
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS =True
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+
+# after confirmation
+EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/rest-auth/login'
+
+
+# for resetting password
+OLD_PASSWORD_FIELD_ENABLED=True
+LOGOUT_ON_PASSWORD_CHANGE = False
+LOGIN_REDIRECT_URL = 'home'
+
+
+# use jwt instead of session
+REST_FRAMEWORK = {
+    
+     "DEFAULT_RENDERER_CLASSES": (
+        "rest_framework.renderers.JSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+    
+}
+
+REST_USE_JWT = True
 
 # UNSURE
+#ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
 ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400 # 1 day in seconds
-ACCOUNT_LOGOUT_REDIRECT_URL ='/accounts/login/'
-LOGIN_REDIRECT_URL = '/'
+ACCOUNT_LOGOUT_REDIRECT_URL ='/rest-auth/login/'
+
+
+
 #SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
 
 """
