@@ -38,6 +38,12 @@ class FacebookLogin(SocialLoginView):
     client_class = OAuth2Client
     serializer_class = SocialLoginSerializer
 
+    def get_serializer(self, *args, **kwargs):
+        serializer_class = self.get_serializer_class()
+        kwargs['context'] = self.get_serializer_context()
+        return serializer_class(*args, **kwargs)
+fb_login = FacebookLogin.as_view()
+
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
     client_class = OAuth2Client
@@ -71,7 +77,7 @@ schema_view = get_schema_view(
 
 
 urlpatterns = [
-    #path('home',home ,name='home'),
+    #path('',home ,name='accounts/login'),
     path('admin/', admin.site.urls),
 
     path('api-auth/', include('rest_framework.urls',namespace='rest_framework')),
