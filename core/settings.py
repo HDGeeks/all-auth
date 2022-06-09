@@ -28,7 +28,7 @@ SECRET_KEY=os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['34.79.92.74']
 
 
 # Application definition
@@ -164,7 +164,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 SWAGGER_SETTINGS = {
     
-    'VALIDATOR_URL': 'http://localhost:8000',
+    'VALIDATOR_URL': 'http://34.79.92.74',
 
 }
 SWAGGER_SETTINGS = {
