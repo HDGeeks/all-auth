@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+from datetime import timedelta
+import datetime
 # environmental variables
 
 
@@ -28,7 +30,7 @@ SECRET_KEY=os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['34.79.92.74']
+ALLOWED_HOSTS = ['34.79.92.74','127.0.0.1','localhost']
 
 
 # Application definition
@@ -48,7 +50,7 @@ INSTALLED_APPS = [
     'drf_yasg',
 
     # simple jwt token
-    'rest_framework_simplejwt',
+    #'rest_framework_simplejwt',
   
     #rest_framework
     'rest_framework',
@@ -78,7 +80,7 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_USER_EMAIL_FIELD = 'email'
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_UNIQUE_EMAIL = True
+
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_USERNAME_REQUIRED = False
@@ -86,28 +88,31 @@ ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS =True
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 
 # after confirmation
-EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/rest-auth/login'
+EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/'
 
 
 # for resetting password
 OLD_PASSWORD_FIELD_ENABLED=True
 LOGOUT_ON_PASSWORD_CHANGE = False
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = '/'
 
 
 # use jwt instead of session
 REST_FRAMEWORK = {
     
-     "DEFAULT_RENDERER_CLASSES": (
+    "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.JSONRenderer",
-        "rest_framework.renderers.BrowsableAPIRenderer",
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
-    
+        "rest_framework.renderers.BrowsableAPIRenderer"
+        ]
 }
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        #'rest_framework.authentication.SessionAuthentication',
+    ]
+}
+
 
 REST_USE_JWT = True
 
@@ -203,6 +208,7 @@ SWAGGER_SETTINGS = {
 }
 AUTHENTICATION_BACKENDS = (
    "django.contrib.auth.backends.ModelBackend",
+   #'rest_framework_simplejwt.authentication.JWTAuthentication',
    "allauth.account.auth_backends.AuthenticationBackend"
 )
 

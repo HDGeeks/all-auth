@@ -14,7 +14,7 @@ django-environ==0.8.1
 django-rest-auth==0.9.5
 djangorestframework==3.13.1
 djangorestframework-jwt==1.11.0
-djangorestframework-simplejwt==5.2.0
+#djangorestframework-simplejwt==5.2.0
 drf-yasg==1.20.0
 drf-yasg2==1.19.4
 httplib2==0.20.4

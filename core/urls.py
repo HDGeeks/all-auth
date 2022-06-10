@@ -4,11 +4,8 @@ from rest_framework import permissions
 
 # simple jwt token
 
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
-from rest_framework_simplejwt.views import TokenVerifyView
+#from rest_framework_simplejwt.views import (
+
 
 # api documentation
 from drf_yasg.views import get_schema_view
@@ -79,6 +76,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     #path('',home ,name='accounts/login'),
     path('admin/', admin.site.urls),
+    re_path(r'^accounts/', include('allauth.urls'), name='socialaccount_signup'),
 
     path('api-auth/', include('rest_framework.urls',namespace='rest_framework')),
     
@@ -107,10 +105,7 @@ urlpatterns = [
     path('rest-auth/google/', GoogleLogin.as_view(), name='google_login'),
 
 
-    # simple jwt token system
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+   
 
     
 
