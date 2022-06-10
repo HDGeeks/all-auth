@@ -40,23 +40,29 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     #cors 
     "corsheaders",
-     #drf_yasg
+
+    #drf_yasg
     'drf_yasg',
+
     # simple jwt token
     'rest_framework_simplejwt',
   
     #rest_framework
     'rest_framework',
+
     #django-rest-auth
     'rest_framework.authtoken',
     'rest_auth',
+
     #all auth
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'rest_auth.registration',
+    
     #the social logins
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
@@ -146,7 +152,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 CORS_ALLOWED_ORIGINS = [
-    '34.79.92.74',
+    'http://34.79.92.74',
 ]
 CORS_ALLOW_METHODS = [
     "DELETE",
