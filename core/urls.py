@@ -94,12 +94,15 @@ urlpatterns = [
     re_path(r'^account-confirm-email/(?P<key>[-:\w]+)/$', confirm_email ,
     name='account_confirm_email'),
 
-    #re_path(r'^verify-email/$', VerifyEmailView.as_view(), name='account_email_verification_sent'),
-    #re_path(r'^rest-auth/registration/account-confirm-email/(?P<key>[-:\w]+)/$', ConfirmEmailView.as_view(), name='account_confirm_email'),
+ 
 
-     # reset password
-    re_path(r'^rest-auth/password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', PasswordResetConfirmView.as_view(),
-     name='password_reset_confirm'),
+    # reset password
+    #re_path(r'^rest-auth/password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', PasswordResetConfirmView.as_view(),
+     #name='password_reset_confirm'),
+
+    path(r'password_reset/', PasswordResetView.as_view(), name='password_reset'),
+    path(r'password_reset_confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    
 
     # Social auth
     path('rest-auth/facebook/', FacebookLogin.as_view(), name='fb_login'),
