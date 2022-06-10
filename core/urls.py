@@ -54,6 +54,8 @@ class GoogleLogin(SocialLoginView):
         return serializer_class(*args, **kwargs)
 google_login = GoogleLogin.as_view()
 
+
+
    
 
   

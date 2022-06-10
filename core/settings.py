@@ -130,6 +130,8 @@ ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
 ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400 # 1 day in seconds
 ACCOUNT_LOGOUT_REDIRECT_URL ='/rest-auth/login/'
 
+#ACCOUNT_ADAPTER = 'accounts.adapters.CustomUserAccountAdapter'
+
 
 
 #SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
