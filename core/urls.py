@@ -84,9 +84,16 @@ urlpatterns = [
 
     # jwt
     re_path(r'^api-token-auth/', obtain_jwt_token),
+    re_path(r'^api-token-refresh/', refresh_jwt_token),
+
+    # accounts
     re_path(r'^accounts/', include('allauth.urls'), name='socialaccount_signup'),
 
+    # rest
+
     path('api-auth/', include('rest_framework.urls',namespace='rest_framework')),
+
+    #rest urls
     
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
