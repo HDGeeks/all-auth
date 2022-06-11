@@ -3,6 +3,8 @@ from django.urls import path, include , re_path
 from rest_framework import permissions
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework_jwt.views import obtain_jwt_token
+from rest_framework_jwt.views import refresh_jwt_token
 # simple jwt token
 
 #from rest_framework_simplejwt.views import (
@@ -79,6 +81,9 @@ schema_view = get_schema_view(
 urlpatterns = [
     #path('',home ,name='accounts/login'),
     path('admin/', admin.site.urls),
+
+    # jwt
+    re_path(r'^api-token-auth/', obtain_jwt_token),
     re_path(r'^accounts/', include('allauth.urls'), name='socialaccount_signup'),
 
     path('api-auth/', include('rest_framework.urls',namespace='rest_framework')),
