@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY=os.environ.get('SECRET_KEY')
-SECRET_KEY="django-insecure-as*@^rs!=q4id1@9chogtm!_&l1bp6#mjsnf_1+cpamh10mirn"
+SECRET_KEY = "django-insecure-as*@^rs!=q4id1@9chogtm!_&l1bp6#mjsnf_1+cpamh10mirn"
 
 
 # STATICFILES_DIRS = [
@@ -37,7 +37,7 @@ SECRET_KEY="django-insecure-as*@^rs!=q4id1@9chogtm!_&l1bp6#mjsnf_1+cpamh10mirn"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['34.79.92.74','127.0.0.1','localhost']
+ALLOWED_HOSTS = ['34.79.92.74', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -50,36 +50,38 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    #cors 
+    # app accounts
+    'app_accounts',
+
+    # cors
     "corsheaders",
 
-    #drf_yasg
+    # drf_yasg
     'drf_yasg',
 
     # simple jwt token
-    #'rest_framework_simplejwt',
-  
-    #rest_framework
+    # 'rest_framework_simplejwt',
+
+    # rest_framework
     'rest_framework',
 
-    #django-rest-auth
+    # django-rest-auth
     'rest_framework.authtoken',
     'rest_auth',
 
-    #all auth
+    # all auth
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'rest_auth.registration',
-    
-    #the social logins
+
+    # the social logins
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
 
 ]
 SITE_ID = 1
-
 
 
 # for account
@@ -91,7 +93,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS =True
+ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 
 # after confirmation
@@ -100,24 +102,22 @@ ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = 'http://34.79.92.74/rest-auth/login'
 
 
-
-
 # for resetting password
-OLD_PASSWORD_FIELD_ENABLED=True
+OLD_PASSWORD_FIELD_ENABLED = True
 LOGOUT_ON_PASSWORD_CHANGE = False
 #LOGIN_REDIRECT_URL = '/'
 
 
 # use jwt instead of session
 REST_FRAMEWORK = {
-    
+
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.JSONRenderer",
         "rest_framework.renderers.BrowsableAPIRenderer"
-    
-        ],
-     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',]
+
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated', ]
 }
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -169,11 +169,10 @@ REST_USE_JWT = True
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 10
-ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400 # 1 day in seconds
-ACCOUNT_LOGOUT_REDIRECT_URL ='/rest-auth/login/'
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400  # 1 day in seconds
+ACCOUNT_LOGOUT_REDIRECT_URL = '/rest-auth/login/'
 
 #ACCOUNT_ADAPTER = 'accounts.adapters.CustomUserAccountAdapter'
-
 
 
 #SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
@@ -189,14 +188,8 @@ DEFAULT_TO_EMAIL = os.environ.get('EMAIL_HOST_USER')
 # EMAIL_HOST_USER =os.environ.get('EMAIL_HOST_USER')
 # EMAIL_HOST_PASSWORD =os.environ.get('EMAIL_HOST_PASSWORD')
 
-EMAIL_HOST_USER ='kinideas.tech@gmail.com'
-EMAIL_HOST_PASSWORD ='kcufxkucwndjreua'
-
-
-
-
-
-
+EMAIL_HOST_USER = 'kinideas.tech@gmail.com'
+EMAIL_HOST_PASSWORD = 'kcufxkucwndjreua'
 
 
 MIDDLEWARE = [
@@ -252,28 +245,37 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 SWAGGER_SETTINGS = {
-    
+
     'VALIDATOR_URL': 'http://34.79.92.74',
 
 }
 SWAGGER_SETTINGS = {
-   'USE_SESSION_AUTH': False
+    'USE_SESSION_AUTH': False
 }
 AUTHENTICATION_BACKENDS = (
-   "django.contrib.auth.backends.ModelBackend",
-   #'rest_framework_simplejwt.authentication.JWTAuthentication',
-   "allauth.account.auth_backends.AuthenticationBackend"
+    "django.contrib.auth.backends.ModelBackend",
+    # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+    "allauth.account.auth_backends.AuthenticationBackend"
 )
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 
-
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR ,'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('POSTGRES_NAME'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
 
@@ -309,9 +311,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -334,6 +333,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 
+AUTH_USER_MODEL = 'app_accounts.NewUser'
+
+#USER_DETAILS_SERIALIZER = ''
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'app_accounts.serializers.NewUserSerializer',
+}
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
