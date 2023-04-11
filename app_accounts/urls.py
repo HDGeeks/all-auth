@@ -1,7 +1,6 @@
 from django.urls import path, include, re_path
 from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework_jwt.views import refresh_jwt_token
-
 from .views import FacebookLogin, GoogleLogin
 
 # from rest-auth
